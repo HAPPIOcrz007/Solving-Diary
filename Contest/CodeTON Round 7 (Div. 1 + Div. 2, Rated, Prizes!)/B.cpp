@@ -1,26 +1,23 @@
 #include <bits/stdc++.h>
 
-int main() {
-    int t;
-    std::cin >> t;
-    while(t--) {
-        int n;
-        std::cin >> n;
-        std::string s;
-        std::cin >> s;
-
-        int a = count(s.begin(), s.end(), 'A');
-        int b = count(s.begin(), s.end(), 'B');
-
-        int ab_pairs = 0;
-        for(int i = 0; i < n-1; i++) {
-            if(s[i] == 'A' && s[i+1] == 'B') ab_pairs++;
-        }
-        if(ab_pairs == 0){
-            std::cout << 0 << std::endl;
-            continue;
-        }
-        std::cout << std::min({a + ab_pairs - 1, b + ab_pairs - 1, ab_pairs + std::min(a,b) - 1}) << "\n";
-    }
-    return 0;
+ 
+signed main() {
+	int tc, n;
+    std::cin >> tc;
+	while (tc--) {
+		std::string s;
+        std::cin >> n >> s;
+        s = ' ' + s + 'C';
+		int pt1 = 1, pt2 = 1, ans = 0;
+		while (s[pt1] == 'B') ++pt1, ++pt2;
+		while (pt1 <= n) {
+			int cntA = 0, cntB = 0;
+			while (s[pt2] == 'A') ++pt2, ++cntA;
+			while (s[pt2] == 'B') ++pt2, ++cntB;
+			if (s[pt2 - 1] == 'B') ans += pt2 - pt1 - 1;
+			if (cntB) pt1 = pt2 - 1;
+			else break;
+		}
+		std::cout << ans << '\n';
+	}
 }
