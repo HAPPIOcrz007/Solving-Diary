@@ -4,17 +4,36 @@ int main(){
     int t;
     std::cin >> t;
     while(t--){
-        int n;
+        long long n;
         std::cin >> n;
-        std::vector <int> a(n,0), b(n,0);
-        for(int i = 0; i < n; i++){
+        std::vector<long long> a(n);
+        for(long long i = 0; i < n; i++){
             std::cin >> a[i];
-            b[i] = a[i];
         }
-        std::sort(b.begin(), b.end());
-        for(int i = 0; i < n; i++){
-            
+
+        std::pair<long long, long long> maxs, smaxs;
+        maxs = {a[0], 0};
+        smaxs = {LLONG_MIN, -1};
+
+        for(long long i = 0; i < n; i++){
+            if(a[i] >= maxs.first){
+                maxs = {a[i], i};
+            }
         }
+        for(long long i = 0; i < n; i++){
+            if(i != maxs.second && a[i] >= smaxs.first){
+                smaxs = {a[i], i};
+            }
+        }
+
+        for(long long i = 0; i < n; i++){
+            if(i != maxs.second){
+                std::cout << a[i] - maxs.first << " ";
+            } else {
+                std::cout << a[i] - smaxs.first << " ";
+            }
+        }
+        std::cout << std::endl;
     }
     return 0;
 }
